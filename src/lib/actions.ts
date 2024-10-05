@@ -16,10 +16,10 @@ export async function getAllArticles() {
   for (const article of rawArticles) {
     const fileUrl = await client.storage
       .from("articles-files")
-      .createSignedUrl(article.id.toString(), 60);
+      .createSignedUrl(article.id.toString(), 1000 * 60 * 60 * 24);
     const coverImageUrl = await client.storage
       .from("articles-cover-images")
-      .createSignedUrl(article.id.toString(), 60);
+      .createSignedUrl(article.id.toString(), 1000 * 60 * 60 * 24);
 
     articles.push({
       ...article,
