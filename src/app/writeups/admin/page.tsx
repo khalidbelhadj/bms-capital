@@ -59,39 +59,37 @@ export default async function AdminPage() {
 
 function Login() {
   return (
-    <Main>
-      <Card className="rounded-none w-[20rem]">
-        <CardHeader>
-          <CardTitle>Log In</CardTitle>
-          <CardDescription>
-            Log in or sign up to use the admin page. Only authorised users are
-            able to sign up.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="w-full">
-          <form className="flex flex-col bg-white gap-2 w-full">
-            <Input
-              placeholder="Email"
-              id="email"
-              name="email"
-              type="email"
-              required
-            />
-            <Input
-              placeholder="Password"
-              id="password"
-              name="password"
-              type="password"
-              required
-            />
-            <div>
-              <Button className="w-full" formAction={login}>
-                Log in
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-    </Main>
+    <Card className="rounded-none w-[20rem]">
+      <CardHeader>
+        <CardTitle>Log In</CardTitle>
+        <CardDescription>
+          Log in or sign up to use the admin page. Only authorised users are
+          able to sign up.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="w-full">
+        <form className="flex flex-col bg-white gap-2 w-full">
+          <Input
+            placeholder="Email"
+            id="email"
+            name="email"
+            type="email"
+            required
+          />
+          <Input
+            placeholder="Password"
+            id="password"
+            name="password"
+            type="password"
+            required
+          />
+          <div>
+            <Button className="w-full" formAction={login}>
+              Log in
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

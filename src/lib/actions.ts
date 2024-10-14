@@ -28,6 +28,12 @@ export async function getAllArticles() {
     });
   }
 
+  articles.sort(
+    (a, b) =>
+      new Date(b.date ?? Date.now()).getTime() -
+      new Date(a.date ?? Date.now()).getTime()
+  );
+
   return articles;
 }
 
