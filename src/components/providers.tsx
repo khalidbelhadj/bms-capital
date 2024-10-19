@@ -1,11 +1,30 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { PropsWithChildren } from "react";
+import { QueryClient } from "@tanstack/react-query";
+import { PropsWithChildren, useState } from "react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import dynamic from "next/dynamic";
 
-export const queryClient = new QueryClient();
-export default function Providers({ children }: PropsWithChildren) {
+function Providers({ children }: PropsWithChildren) {
+  const [queryClient] = useState(new QueryClient());
+  const persister = createSyncStoragePersister({
+    storage: window.localStorage,
+  });
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{ persister }}
+    >
+      {children}
+      <ReactQueryDevtools initialIsOpen={true} />
+    </PersistQueryClientProvider>
   );
 }
+
+const ProvidersDynamic = dynamic(() => Promise.resolve(Providers), {
+  ssr: false,
+});
+
+export default ProvidersDynamic;

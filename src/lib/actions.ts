@@ -2,6 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function getAllArticles() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -104,9 +105,6 @@ export async function deleteArticle(id: number) {
   }
 }
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
 export async function login(formData: FormData) {
   const supabase = createClient();
 
@@ -121,7 +119,6 @@ export async function login(formData: FormData) {
     throw new Error("Failed to log in");
   }
 
-  revalidatePath("/", "layout");
   redirect("/writeups/admin");
 }
 
@@ -133,6 +130,5 @@ export async function signout() {
     throw new Error("Failed to sign out");
   }
 
-  revalidatePath("/", "layout");
   redirect("/writeups/admin");
 }

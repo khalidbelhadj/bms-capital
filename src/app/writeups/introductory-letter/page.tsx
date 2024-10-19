@@ -8,7 +8,12 @@ export default function IntroductoryLetter() {
     <Main>
       <div className="max-w-screen-md flex flex-col gap-5">
         <h1>Introductory Letter.</h1>
-        <Image className="border" src={image} alt="Introductory Letter" />
+        <Image
+          priority
+          className="border"
+          src={image}
+          alt="Introductory Letter"
+        />
         <p>
           “Analysis connotes the careful study of available facts with the
           attempt to draw conclusions therefrom based on established principles

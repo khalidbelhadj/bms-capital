@@ -9,6 +9,7 @@ import Dropdown from "@/components/dropdown";
 import mainLogo from "@/../public/main-logo.webp";
 import smallLogo from "@/../public/small-logo.jpg";
 import Providers from "@/components/providers";
+import Link from "next/link";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     "Concentrated and Valued Holdings based in the Heart of Scotland",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -40,22 +41,22 @@ export default async function RootLayout({
         <Toaster />
         <header className="h-20 bg-white z-10 px-10 lg:px-40 text-nowrap">
           <div className="max-w-screen-2xl h-full mx-auto flex justify-between items-center gap-2">
-            <a className="w-9 h-9 block lg:hidden" href="/">
+            <Link className="w-9 h-9 block lg:hidden" href="/">
               <Image
                 src={smallLogo}
                 alt="logo"
                 className="object-cover h-full"
               />
-            </a>
+            </Link>
 
-            <a className="h-full w-[25rem] block max-lg:hidden" href="/">
+            <Link className="h-full w-[25rem] block max-lg:hidden" href="/">
               <Image
                 priority
                 src={mainLogo}
                 alt="Main Logo"
                 className="object-cover h-full"
               />
-            </a>
+            </Link>
 
             <div className="lg:hidden flex items-center h-full ml-auto">
               <SheetNav />
@@ -64,25 +65,25 @@ export default async function RootLayout({
             <nav className="flex-grow h-full max-lg:hidden">
               <ul className="flex gap-5 h-full items-center justify-end">
                 <Dropdown title="Writeups" href="/writeups">
-                  <a href="/writeups/monday-commentaries">
-                    Monday Commentaries
-                  </a>
-                  <a href="/writeups/introductory-letter">
+                  <Link href="/writeups/commentaries">Commentaries</Link>
+                  <Link href="/writeups/introductory-letter">
                     Introductory Letter
-                  </a>
+                  </Link>
                 </Dropdown>
                 <li>
-                  <a href="/investment-philosophy">Investment Philosophy</a>
+                  <Link href="/investment-philosophy">
+                    Investment Philosophy
+                  </Link>
                 </li>
                 <li>
-                  <a href="/team">Team</a>
+                  <Link href="/team">Team</Link>
                 </li>
                 <Dropdown title="Policy" href="">
-                  <a href="/policy/charity">Charity</a>
-                  <a href="/policy/terms-and-conditions">
+                  <Link href="/policy/charity">Charity</Link>
+                  <Link href="/policy/terms-and-conditions">
                     Terms and Conditions
-                  </a>
-                  <a href="/policy/privacy-policy">Privacy Policy</a>
+                  </Link>
+                  <Link href="/policy/privacy-policy">Privacy Policy</Link>
                 </Dropdown>
               </ul>
             </nav>
@@ -96,7 +97,7 @@ export default async function RootLayout({
             <div className="flex flex-grow items-end justify-end h-full">
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
-                  <a
+                  <Link
                     href="https://www.linkedin.com/company/bmscapital"
                     target="_blank"
                   >
@@ -112,8 +113,8 @@ export default async function RootLayout({
                         fill="currentColor"
                       ></path>
                     </svg>
-                  </a>
-                  <a href="https://medium.com/@bmscapital" target="_blank">
+                  </Link>
+                  <Link href="https://medium.com/@bmscapital" target="_blank">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -126,8 +127,8 @@ export default async function RootLayout({
                         fill="currentColor"
                       ></path>
                     </svg>
-                  </a>
-                  <a href="https://twitter.com/BMS_Capital" target="_blank">
+                  </Link>
+                  <Link href="https://twitter.com/BMS_Capital" target="_blank">
                     <svg
                       width="24"
                       height="24"
@@ -140,7 +141,7 @@ export default async function RootLayout({
                         fill="currentColor"
                       ></path>
                     </svg>
-                  </a>
+                  </Link>
                 </div>
                 <div className="text-neutral-400 text-xs">
                   © 2024 BMS Capital

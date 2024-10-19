@@ -1,4 +1,5 @@
 import Main from "@/components/main";
+import Link from "next/link";
 import React from "react";
 
 export default function PrivacyPolicy() {
@@ -62,9 +63,9 @@ export default function PrivacyPolicy() {
             Newsletter or contact us directly from the website. Users who are
             uncertain about what information is mandatory are welcome to contact
             us via{" "}
-            <a target="_blank" href="mailto:bmscapitalinfo@gmail.com">
+            <Link target="_blank" href="mailto:bmscapitalinfo@gmail.com">
               bmscapitalinfo@gmail.com
-            </a>
+            </Link>
             .
           </p>
           <h2>Your rights:</h2>
@@ -146,9 +147,9 @@ export default function PrivacyPolicy() {
             If you would like to contact us to understand more about this Policy
             or wish to contact us concerning any matter relating to individual
             rights and your Personal Information, you may send an email to{" "}
-            <a target="_blank" href="mailto:bmscapitalinfo@gmail.com">
+            <Link target="_blank" href="mailto:bmscapitalinfo@gmail.com">
               bmscapitalinfo@gmail.com
-            </a>
+            </Link>
             .
           </p>
         </div>

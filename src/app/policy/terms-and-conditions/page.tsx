@@ -1,4 +1,5 @@
 import Main from "@/components/main";
+import Link from "next/link";
 import React from "react";
 
 export default function TermsAndConditions() {
@@ -11,9 +12,9 @@ export default function TermsAndConditions() {
           <p>
             These terms and conditions outline the rules and regulations for the
             use of Bruce Malhotra Szeszko Capital LLP&apos;s Website, located at{" "}
-            <a target="_blank" href="https://bms-capital.com">
+            <Link target="_blank" href="https://bms-capital.com">
               https://bms-capital.com
-            </a>
+            </Link>
             .
           </p>
           <p>
@@ -183,9 +184,9 @@ export default function TermsAndConditions() {
             </li>
             <li>
               <p>
-                <a target="_blank" href="http://dot.com">
+                <Link target="_blank" href="http://dot.com">
                   Dot.com
-                </a>{" "}
+                </Link>{" "}
                 community sites;
               </p>
             </li>

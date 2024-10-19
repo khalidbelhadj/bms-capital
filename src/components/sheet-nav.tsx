@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { AlignJustify } from "lucide-react";
 
@@ -10,29 +11,33 @@ export default function SheetNav() {
       <SheetContent>
         <ul className="flex flex-col gap-2 h-full">
           <li>
-            <a href="/">Home</a>
+            <Link href="/">Home</Link>
           </li>
           <li>
-            <a href="/investment-philosophy">Investment Philosophy</a>
+            <Link href="/investment-philosophy">Investment Philosophy</Link>
           </li>
           <li>
-            <a href="/team">Team</a>
+            <Link href="/team">Team</Link>
           </li>
           <li>
-            <a href="/writeups">Writeups</a>
+            <Link href="/writeups">Writeups</Link>
             <div className="pl-4 border-l-2 flex flex-col gap-2 pt-2">
-              <a href="/writeups/monday-commentaries">Monday Commentaries</a>
-              {/* <a href="/writeups/insights">Insights</a> */}
-              <a href="/writeups/introductory-letter">Introductory Letter</a>
+              <Link href="/writeups/commentaries">Commentaries</Link>
+              {/* <Link href="/writeups/insights">Insights</Link> */}
+              <Link href="/writeups/introductory-letter">
+                Introductory Letter
+              </Link>
             </div>
           </li>
 
           <li>
-            <a href="">Policy</a>
+            <Link href="">Policy</Link>
             <div className="pl-4 flex flex-col gap-2 pt-2 border-l-2">
-              <a href="/policy/charity">Charity</a>
-              <a href="/policy/terms-and-conditions">Terms and Conditions</a>
-              <a href="/policy/privacy-policy">Privacy Policy</a>
+              <Link href="/policy/charity">Charity</Link>
+              <Link href="/policy/terms-and-conditions">
+                Terms and Conditions
+              </Link>
+              <Link href="/policy/privacy-policy">Privacy Policy</Link>
             </div>
           </li>
         </ul>

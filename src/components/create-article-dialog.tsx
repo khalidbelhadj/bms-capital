@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Textarea } from "@/components/ui/textarea";
 import { useDropzone } from "react-dropzone";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createArticle } from "@/lib/actions";
 import {
   Dialog,
@@ -24,12 +24,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { queryClient } from "@/components/providers";
 import { useToast } from "@/hooks/use-toast";
 
 const ENFORCE_FILES = true;
 
 export default function CreateArticleDialog() {
+  const queryClient = useQueryClient();
   const { toast } = useToast();
 
   // Dialog open state

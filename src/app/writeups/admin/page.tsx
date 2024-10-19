@@ -1,7 +1,5 @@
 import CreateArticleDialog from "@/components/create-article-dialog";
 import AdminArticles from "@/components/admin-articles";
-import AdminArticlesSkelton from "@/components/admin-articles-skelton";
-import ArticlesHydration from "@/components/articles-hydration";
 import Main from "@/components/main";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { login, signout } from "@/lib/actions";
 import { createClient } from "@/utils/supabase/server";
-import { Suspense } from "react";
 
 export default async function AdminPage() {
   const client = createClient();
@@ -46,11 +43,7 @@ export default async function AdminPage() {
           className="max-w-screen-lg text-center items-center flex flex-col prose gap-10"
           id="feed"
         >
-          <Suspense fallback={<AdminArticlesSkelton />}>
-            <ArticlesHydration>
-              <AdminArticles />
-            </ArticlesHydration>
-          </Suspense>
+          <AdminArticles />
         </div>
       </div>
     </Main>

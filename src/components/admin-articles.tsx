@@ -12,17 +12,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteArticle } from "@/lib/actions";
 import { useToast } from "@/hooks/use-toast";
-import { queryClient } from "@/components/providers";
 import Article from "@/components/article";
+import AdminArticlesSkelton from "@/components/admin-articles-skelton";
 
 export default function AdminArticles() {
+  const queryClient = useQueryClient();
   const { toast } = useToast();
-  const { data: articles } = useArticles();
+  const { data: articles, isPending } = useArticles();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending: isDeletePending } = useMutation({
     mutationFn: async (id: number) => {
       await deleteArticle(id);
     },
@@ -52,6 +53,10 @@ export default function AdminArticles() {
   });
 
   const [openId, setOpenId] = React.useState<number | null>(null);
+
+  if (isPending) {
+    return <AdminArticlesSkelton />;
+  }
 
   return (
     <div className="flex flex-col gap-5 w-full">
@@ -90,8 +95,31 @@ export default function AdminArticles() {
                     onClick={() => mutate(article.id)}
                     className="flex-1"
                     variant="destructive"
+                    disabled={isDeletePending}
                   >
-                    Delete
+                    {isDeletePending && (
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          stroke-width="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                    )}
+                    {isDeletePending ? "Deleting..." : "Delete"}
                   </Button>
                 </DialogFooter>
               </DialogContent>

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import React, { PropsWithChildren, useState } from "react";
 
 export default function Dropdown({
@@ -19,7 +20,7 @@ export default function Dropdown({
       onMouseOut={() => setShow(false)}
       className="relative h-full flex items-center"
     >
-      <a href={href}>{title}</a>
+      <Link href={href}>{title}</Link>
       <div
         className={cn(
           "absolute top-3/4 pl-4 flex-col gap-2 text-nowrap flex border-l invisible opacity-0 not-active bg-white transition-all",

@@ -6,6 +6,7 @@ const nextConfig = {
         hostname: "qhdmjokveswjhibvruek.supabase.co",
       },
     ],
+    minimumCacheTTL: 60,
   },
 };
 

@@ -1,6 +1,7 @@
 import { Database } from "@/utils/supabase/supabase-types";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 type ArticleType = Database["public"]["Tables"]["articles"]["Row"] & {
   fileUrl: string;
@@ -9,7 +10,7 @@ type ArticleType = Database["public"]["Tables"]["articles"]["Row"] & {
 
 export default function Article({ article }: { article: ArticleType }) {
   return (
-    <a
+    <Link
       key={"user-" + article.id}
       target="_blank"
       href={article.fileUrl}
@@ -42,6 +43,6 @@ export default function Article({ article }: { article: ArticleType }) {
           className="object-cover bg-cover w-full h-full group-hover:brightness-90 transition-all"
         />
       </div>
-    </a>
+    </Link>
   );
 }
