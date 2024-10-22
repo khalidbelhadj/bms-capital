@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 function Providers({ children }: PropsWithChildren) {
   const [queryClient] = useState(new QueryClient());
   const persister = createSyncStoragePersister({
-    storage: window.localStorage,
+    storage: null,
   });
   return (
     <PersistQueryClientProvider

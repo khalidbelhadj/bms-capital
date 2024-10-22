@@ -4,6 +4,17 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+export async function getFileUrl(id: number) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _cookies = cookies(); // This disables caching??
+  const client = createClient();
+  const fileUrl = await client.storage
+    .from("articles-files")
+    .createSignedUrl(id.toString(), 1000 * 60 * 60 * 24);
+
+  return fileUrl.data?.signedUrl ?? null;
+}
+
 export async function getAllArticles() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const _cookies = cookies(); // This disables caching??
@@ -15,17 +26,13 @@ export async function getAllArticles() {
   const articles = [];
 
   for (const article of rawArticles) {
-    const fileUrl = await client.storage
-      .from("articles-files")
-      .createSignedUrl(article.id.toString(), 1000 * 60 * 60 * 24);
     const coverImageUrl = await client.storage
       .from("articles-cover-images")
-      .createSignedUrl(article.id.toString(), 1000 * 60 * 60 * 24);
+      .getPublicUrl(article.id.toString());
 
     articles.push({
       ...article,
-      fileUrl: fileUrl.data?.signedUrl ?? "",
-      coverImageUrl: coverImageUrl.data?.signedUrl ?? "",
+      coverImageUrl: coverImageUrl.data.publicUrl ?? "",
     });
   }
 

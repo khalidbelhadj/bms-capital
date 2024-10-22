@@ -1,20 +1,23 @@
 import { Database } from "@/utils/supabase/supabase-types";
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { getFileUrl } from "@/lib/actions";
 
 type ArticleType = Database["public"]["Tables"]["articles"]["Row"] & {
-  fileUrl: string;
   coverImageUrl: string;
 };
 
 export default function Article({ article }: { article: ArticleType }) {
   return (
-    <Link
+    <div
       key={"user-" + article.id}
-      target="_blank"
-      href={article.fileUrl}
-      className="bg-white p-5 w-full border gap-5 h-72 max-sm:h-fit shadow-sm flex max-sm:flex-col-reverse text-left prose-p:my-0 group min-w-0 hover:text-muted-foreground transition-all"
+      onClick={async () => {
+        const url = await getFileUrl(article.id);
+        if (url) {
+          window.open(url, "_blank");
+        }
+      }}
+      className="bg-white p-5 w-full border gap-5 h-72 max-sm:h-fit shadow-sm flex max-sm:flex-col-reverse text-left prose-p:my-0 group min-w-0 hover:text-muted-foreground transition-all hover:cursor-pointer"
     >
       <div className="flex-[2] flex flex-col min-h-0 gap-1 min-w-0">
         <h2 className="font-bold text-2xl pb-2">{article.title}</h2>
@@ -43,6 +46,6 @@ export default function Article({ article }: { article: ArticleType }) {
           className="object-cover bg-cover w-full h-full group-hover:brightness-90 transition-all"
         />
       </div>
-    </Link>
+    </div>
   );
 }
