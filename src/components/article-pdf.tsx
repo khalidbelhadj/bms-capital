@@ -1,17 +1,15 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import React, { useRef, useState } from "react";
 import { pdfjs, Document, Page } from "react-pdf";
 
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-export default function ArticlePDF({ url }: { url: string }) {
+function ArticlePDFDynamic({ url }: { url: string }) {
   const docRef = useRef<HTMLDivElement>(null);
   const [numPages, setNumPages] = useState<number>();
   const [width, setWidth] = useState<number>();
@@ -40,3 +38,9 @@ export default function ArticlePDF({ url }: { url: string }) {
     </div>
   );
 }
+
+const ArticlePDF = dynamic(() => Promise.resolve(ArticlePDFDynamic), {
+  ssr: false,
+});
+
+export default ArticlePDF;
