@@ -1,9 +1,8 @@
-import DocumentComp from "@/components/document";
+import ArticlePDF from "@/components/article-pdf";
+import DownloadButton from "@/components/download-button";
 import Main from "@/components/main";
 import { Separator } from "@/components/ui/separator";
 import { getArticle, getFileUrl } from "@/lib/actions";
-import { Download } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 
 export default async function ArticlePage({
@@ -19,7 +18,7 @@ export default async function ArticlePage({
 
   return (
     <Main className="items-start">
-      <div className="flex flex-col max-w-screen-md mx-auto gap-5">
+      <div className="flex flex-col mx-auto gap-5 w-[1024px]">
         <h1>{article?.title}</h1>
 
         <div className="flex items-center">
@@ -30,19 +29,13 @@ export default async function ArticlePage({
               .slice(0, 4)
               .join(" ")}
           </p>
-          <Link
-            className="bg-primary text-primary-foreground w-fit py-2 px-4 rounded-full flex items-center gap-1 ml-auto "
-            href={url}
-            download
-            target="_blank"
-          >
-            <Download size={15} />
-            Download
-          </Link>
+          <div className="ml-auto">
+            <DownloadButton url={url} title={article.title} />
+          </div>
         </div>
 
         <Separator />
-        <DocumentComp data={url} />
+        <ArticlePDF url={url} />
       </div>
     </Main>
   );
