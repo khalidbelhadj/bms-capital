@@ -15,6 +15,15 @@ export async function getFileUrl(id: number) {
   return fileUrl.data?.signedUrl ?? null;
 }
 
+export async function getArticle(id: number) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _cookies = cookies(); // This disables caching??
+  const client = createClient();
+  const article = await client.from("articles").select().eq("id", id);
+
+  return article.data?.[0] ?? null;
+}
+
 export async function getAllArticles() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const _cookies = cookies(); // This disables caching??

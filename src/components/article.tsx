@@ -1,7 +1,7 @@
 import { Database } from "@/utils/supabase/supabase-types";
 import React from "react";
 import Image from "next/image";
-import { getFileUrl } from "@/lib/actions";
+import Link from "next/link";
 
 type ArticleType = Database["public"]["Tables"]["articles"]["Row"] & {
   coverImageUrl: string;
@@ -9,14 +9,9 @@ type ArticleType = Database["public"]["Tables"]["articles"]["Row"] & {
 
 export default function Article({ article }: { article: ArticleType }) {
   return (
-    <div
+    <Link
+      href={`/writeups/${article.id}`}
       key={"user-" + article.id}
-      onClick={async () => {
-        const url = await getFileUrl(article.id);
-        if (url) {
-          window.open(url, "_blank");
-        }
-      }}
       className="bg-white p-5 w-full border gap-5 h-72 max-sm:h-fit shadow-sm flex max-sm:flex-col-reverse text-left prose-p:my-0 group min-w-0 hover:text-muted-foreground transition-all hover:cursor-pointer"
     >
       <div className="flex-[2] flex flex-col min-h-0 gap-1 min-w-0">
@@ -46,6 +41,6 @@ export default function Article({ article }: { article: ArticleType }) {
           className="object-cover bg-cover w-full h-full group-hover:brightness-90 transition-all"
         />
       </div>
-    </div>
+    </Link>
   );
 }
