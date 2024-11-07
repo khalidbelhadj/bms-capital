@@ -8,7 +8,7 @@ export default function Home() {
         <h1>
           Concentrated and Valued Holdings based in the Heart of Scotland.
         </h1>
-        <Link className="underline" href="/writeups/commentaries">
+        <Link className="underline" href="/writeups/commentaries" prefetch>
           Commentaries
         </Link>
       </div>

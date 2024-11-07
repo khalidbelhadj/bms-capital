@@ -65,7 +65,9 @@ export default function RootLayout({
             <nav className="flex-grow h-full max-lg:hidden">
               <ul className="flex gap-5 h-full items-center justify-end">
                 <Dropdown title="Writeups" href="/writeups">
-                  <Link href="/writeups/commentaries">Commentaries</Link>
+                  <Link href="/writeups/commentaries" prefetch>
+                    Commentaries
+                  </Link>
                   <Link href="/writeups/introductory-letter">
                     Introductory Letter
                   </Link>
