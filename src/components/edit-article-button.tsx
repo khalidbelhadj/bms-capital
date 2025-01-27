@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Textarea } from "@/components/ui/textarea";
 import { useDropzone } from "react-dropzone";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createArticle } from "@/lib/actions";
+import { updateArticle } from "@/lib/actions";
 import {
   Dialog,
   DialogContent,
@@ -25,10 +25,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { Database } from "@/utils/supabase/supabase-types";
 
-const ENFORCE_FILES = true;
-
-export default function CreateArticleDialog() {
+export default function EditArticleButton({
+  article,
+}: {
+  article: Database["public"]["Tables"]["articles"]["Row"];
+}) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -42,27 +45,35 @@ export default function CreateArticleDialog() {
   const coverImageDropzone = useDropzone({ multiple: false });
   const fileDropzone = useDropzone({ multiple: false });
 
-  // Create article
+  useEffect(() => {
+    if (article) {
+      setTitle(article.title);
+      setDescription(article.description);
+      setDate(new Date(article.date ?? Date.now()));
+    }
+  }, [article]);
+
+  // Update article
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       const files = new FormData();
       files.append("file", fileDropzone.acceptedFiles[0]);
       files.append("coverImage", coverImageDropzone.acceptedFiles[0]);
 
-      await createArticle(title, description, date, files);
+      await updateArticle(article.id, title, description, date, files);
     },
     onError: (error) => {
       toast({
         title: "Error",
-        description: "Could not create article.",
+        description: "Could not update article.",
         variant: "default",
       });
       console.log(error);
     },
     onSuccess: async () => {
       toast({
-        title: "Article Created",
-        description: "The article has been created successfully.",
+        title: "Article Updated",
+        description: "The article has been updated successfully.",
         variant: "default",
       });
       await queryClient.invalidateQueries({
@@ -83,37 +94,17 @@ export default function CreateArticleDialog() {
       return;
     }
 
-    if (ENFORCE_FILES) {
-      if (coverImageDropzone.acceptedFiles.length === 0) {
-        toast({
-          title: "Cover image required",
-          description: "Please upload a cover image.",
-          variant: "default",
-        });
-        return;
-      }
-
-      if (fileDropzone.acceptedFiles.length === 0) {
-        toast({
-          title: "Article file required",
-          description: "Please upload an article file.",
-          variant: "default",
-        });
-        return;
-      }
-    }
-
     mutate();
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>New Article</Button>
+        <Button variant="outline">Edit</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create an article</DialogTitle>
+          <DialogTitle>Edit article</DialogTitle>
         </DialogHeader>
         <form className="flex flex-col gap-2">
           <Input
@@ -162,11 +153,7 @@ export default function CreateArticleDialog() {
               coverImageDropzone.isDragActive && "bg-accent transition-colors"
             )}
           >
-            <Input
-              name="coverImage"
-              required
-              {...coverImageDropzone.getInputProps()}
-            />
+            <Input name="coverImage" {...coverImageDropzone.getInputProps()} />
             <p className="text-sm text-muted-foreground absolute top-2 left-2">
               Cover Image
             </p>
@@ -185,7 +172,7 @@ export default function CreateArticleDialog() {
               fileDropzone.isDragActive && "bg-accent transition-colors"
             )}
           >
-            <Input name="file" required {...fileDropzone.getInputProps()} />
+            <Input name="file" {...fileDropzone.getInputProps()} />
             <p className="text-sm text-muted-foreground absolute top-2 left-2">
               Article File
             </p>
@@ -233,7 +220,7 @@ export default function CreateArticleDialog() {
                   ></path>
                 </svg>
               )}
-              {isPending ? "Uploading..." : "Create"}
+              {isPending ? "Uploading..." : "Update"}
             </Button>
           </DialogFooter>
         </form>

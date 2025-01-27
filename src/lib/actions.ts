@@ -85,6 +85,7 @@ export async function createArticle(
     .upload(article.data[0].id.toString(), files.get("file") as File);
 
   if (fileRes.error) {
+    await client.from("articles").delete().eq("id", article.data[0].id);
     throw new Error("Failed to upload article file");
   }
 
@@ -93,7 +94,59 @@ export async function createArticle(
     .upload(article.data[0].id.toString(), files.get("coverImage") as File);
 
   if (coverImageRes.error) {
+    await client.from("articles").delete().eq("id", article.data[0].id);
     throw new Error("Failed to upload cover image");
+  }
+}
+
+export async function updateArticle(
+  articleId: number,
+  title: string,
+  description: string,
+  date: Date,
+  files: FormData
+) {
+  console.log(articleId, title, description, date);
+  const client = createClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _cookies = cookies(); // This disables caching??
+
+  // Update article
+  const { error } = await client
+    .from("articles")
+    .update({
+      title,
+      description,
+      date: date.toISOString(),
+    })
+    .eq("id", articleId);
+
+  if (error) {
+    console.log(error);
+    throw new Error("Failed to update article");
+  }
+
+  // Update images
+  const newFile = files.get("file") as File | string;
+  if (newFile !== "undefined") {
+    const fileRes = await client.storage
+      .from("articles-files")
+      .upload(articleId.toString(), newFile);
+
+    if (fileRes.error) {
+      throw new Error("Failed to upload article file");
+    }
+  }
+
+  const newCoverImage = files.get("coverImage") as File | string;
+  if (newCoverImage !== "undefined") {
+    const coverImageRes = await client.storage
+      .from("articles-cover-images")
+      .upload(articleId.toString(), newCoverImage);
+
+    if (coverImageRes.error) {
+      throw new Error("Failed to upload cover image");
+    }
   }
 }
 

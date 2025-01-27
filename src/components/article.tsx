@@ -23,7 +23,7 @@ export default function Article({ article }: { article: ArticleType }) {
         </div>
 
         <p className="text-xs text-neutral-400 mt-auto">
-          {new Date(article.created_at)
+          {new Date(article.date ?? Date.now())
             .toString()
             .split(" ")
             .slice(0, 4)
